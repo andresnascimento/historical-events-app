@@ -6,14 +6,221 @@
     <title>Historical Events</title>
     <link rel="stylesheet" href="css/style.css" />
     <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <header>
-      <h1>Historical Events app</h1>
-    </header>
+    <a href="#main-content" class="skip-link"> Jump to main content </a>
+    <div class="app-layout">
+      <!-- search -->
+      <aside aria-labelledby="filters-title" class="section__search">
+        <div class="section__search-language">
+          <h2 id="filters-title" class="title--sm">
+            Search
+            <span class="material-symbols-outlined" aria-hidden="true">
+              search
+            </span>
+          </h2>
+          <nav aria-label="Select language">
+            <ul>
+              <li>
+                <button
+                  aria-pressed="false"
+                  aria-label="Português"
+                  aria-describedby="lang-pt-desc"
+                >
+                  🇧🇷
+                </button>
+                <span id="lang-pt-desc" hidden>
+                  Mudar idioma para português do Brasil
+                </span>
+              </li>
+              <li>
+                <button
+                  aria-pressed="True"
+                  aria-label="English"
+                  aria-describedby="lang-en-desc"
+                >
+                  🇬🇧
+                </button>
+                <span id="lang-en-desc" hidden>
+                  Change language to English
+                </span>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <form class="section__search-form">
+          <h3 class="title--lg">
+            Your birth year changed the world. Let’s see how.
+          </h3>
+          <p class="subtitle--md">
+            A lot happened the year you arrived. Let’s rewind and explore.
+          </p>
+          <label for="birth-year">Birth Year</label>
+          <input type="date" id="birth-year" name="birth-year" />
+          <button type="submit" class="btn btn-primary btn-lg">
+            Show me my year
+          </button>
+        </form>
+      </aside>
+      <!-- page content -->
+      <main id="main-content" class="section__search-result">
+        <section class="events-layout">
+          <div class="events-list">
+            <!-- list of events fetched -->
+            <header class="section__search-result-header">
+              <h1 class="title--lg">1992</h1>
+              <nav aria-label="filter by category">
+                <ul class="section__search-result-filters">
+                  <li>
+                    <button
+                      aria-current="true"
+                      class="badge badge--primary is-active"
+                    >
+                      All
+                    </button>
+                  </li>
+                  <li>
+                    <button class="badge badge--primary">Politics</button>
+                  </li>
+                  <li>
+                    <button class="badge badge--primary">Technology</button>
+                  </li>
+                  <li><button class="badge badge--primary">Music</button></li>
+                </ul>
+              </nav>
+            </header>
+            <section aria-labelledby="events-title">
+              <ul>
+                <li>
+                  <article>
+                    <button
+                      type="button"
+                      aria-haspopup="grid"
+                      aria-controls="event-1992-01-20"
+                      class="event__preview-container"
+                    >
+                      <figure class="event__preview-image">
+                        <img
+                          src="./assets/img/evento-1.png"
+                          alt="image description"
+                        />
+                      </figure>
+                      <div class="event__preview-description">
+                        <time
+                          datetime="1992-01-20"
+                          class="event__preview-description-title"
+                        >
+                          Jan 20
+                        </time>
+                        <p>
+                          In odio sed scelerisque fermentum sit. Et neque
+                          pellentesque suspendisse at et feugiat consectetur
+                          consectetur. Aenean diam netus turpis amet volutpat
+                          cursus. Aliquam euismod mauris auctor condimentum nibh
+                          arcu aenean habitasse.
+                        </p>
+                      </div>
+                    </button>
+                  </article>
+                </li>
+                <li>
+                  <article>
+                    <button
+                      type="button"
+                      aria-haspopup="grid"
+                      aria-controls="event-1992-01-20"
+                      class="event__preview-container"
+                    >
+                      <figure class="event__preview-image">
+                        <img
+                          src="./assets/img/evento-2.png"
+                          alt="image description"
+                        />
+                      </figure>
+                      <div class="event__preview-description">
+                        <time
+                          datetime="1992-01-20"
+                          class="event__preview-description-title"
+                        >
+                          Jan 20
+                        </time>
+                        <p>
+                          In odio sed scelerisque fermentum sit. Et neque
+                          pellentesque suspendisse at et feugiat consectetur
+                          consectetur. Aenean diam netus turpis amet volutpat
+                          cursus. Aliquam euismod mauris auctor condimentum nibh
+                          arcu aenean habitasse.
+                        </p>
+                      </div>
+                    </button>
+                  </article>
+                </li>
+              </ul>
+            </section>
+          </div>
+          <!-- details from selected event -->
+          <!-- <div class="event-detail">
+          <article
+            id="event-1992-01-20"
+            tabindex="-1"
+            aria-labelledby="event-title"
+          >
+            <header>
+              <button type="button">Go back</button>
+              <time datetime="1992-01-20"> 20 de janeiro de 1992 </time>
+              <h2 id="event-title">Title Lorem</h2>
+            </header>
+            <figure>
+              <img src="./assets/img/evento-1.png" alt="image description" />
+            </figure>
+            <div>
+              <p>
+                Lectus aliquet pellentesque blandit quam potenti morbi turpis.
+                Nulla laoreet sit purus est id augue. Pulvinar eros nec lectus
+                aenean. Viverra mattis tempor id eu nunc ultrices pellentesque
+                in. Id pretium tristique nullam blandit feugiat. Nunc etiam sed
+                dignissim curabitur at. Elementum nibh suspendisse tempus
+                consectetur justo. Lorem interdum ac ornare cursus nunc
+                porttitor duis nam. Lorem nibh amet vel massa amet rutrum. Ac
+                viverra pharetra congue massa feugiat consectetur fermentum
+                volutpat. Tristique nisl quisque bibendum libero vestibulum eget
+                egestas. Amet mauris facilisis quam vel malesuada. Aliquam quis
+                enim vel turpis. Gravida libero quam turpis curabitur
+                pellentesque. Consectetur arcu sagittis a blandit venenatis ut
+                sem. Magna nulla eget in urna amet id metus lectus. Id vulputate
+                vitae quis ultrices ut facilisis diam. Mauris sed mauris neque
+                ornare sit purus. Enim blandit amet at ipsum nam fermentum proin
+                tincidunt commodo. Felis pretium tincidunt ut nullam sed ut
+                risus. Rutrum vel habitant duis tortor pellentesque. Eget magna
+                platea ultrices hendrerit odio sit id massa. Consequat neque
+                vitae posuere non. Urna id non sit orci blandit vestibulum a
+                urna urna. Ac malesuada sit convallis sagittis ac consequat
+                interdum. Convallis vitae scelerisque sodales orci in id
+                consequat. Eget tempus mauris dictum varius amet eleifend.
+                Tellus tempor auctor amet auctor gravida parturient. Eleifend ac
+                nunc purus elementum ac. Molestie id amet vestibulum nunc non
+                vitae consequat. Velit bibendum turpis aliquam mattis sed
+                facilisis mauris accumsan. Amet vel condimentum cursus ultrices
+                tellus tortor aenean turpis nunc. Quam mi sit tellus proin
+                aliquet nulla sed sagittis. Tortor varius ultricies at velit
+                donec donec. Mus a.
+              </p>
+            </div>
+          </article>
+        </div> -->
+        </section>
+      </main>
+    </div>
     <script src="js/script.js"></script>
   </body>
 </html>
