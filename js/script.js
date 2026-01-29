@@ -1,30 +1,5 @@
-/* async function fetchWikipediaSearch(year, term) {
-  const query = `${year} ${term}`;
-
-  const url =
-    `https://en.wikipedia.org/w/api.php` +
-    `?action=query` +
-    `&list=search` +
-    `&srsearch=${encodeURIComponent(query)}` +
-    `&srlimit=10` +
-    `&format=json` +
-    `&origin=*`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    console.log("Wikipedia raw response:", data);
-    console.log("Search results:", data.query.search);
-
-    return data.query.search;
-  } catch (error) {
-    console.error("Error fetching Wikipedia:", error);
-  }
-} */
-
 const searchURL = (query) =>
-  `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=10&format=json&origin=*`;
+  `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=100&format=json&origin=*`;
 
 const searchDetailsURL = (pageId) => {
   return (
@@ -42,6 +17,55 @@ const searchDetailsURL = (pageId) => {
   );
 };
 
+const historicalEvents = {
+  result: [],
+};
+
+const DECISION_KEYWORDS = [
+  "treaty",
+  "law",
+  "agreement",
+  "pact",
+  "act",
+  "policy",
+  "accord",
+  "constitution",
+  "reform",
+  "health",
+  "climate",
+];
+
+const filterEvents = function (rawEventsArr, year) {
+  return rawEventsArr.filter((item) => {
+    const title = item.title.toLowerCase();
+    const snippet = item.snippet.toLowerCase();
+    // filter by keywords
+    const hasKeywords = DECISION_KEYWORDS.some(
+      (keyword) =>
+        (title.includes(keyword) || snippet.includes(keyword)) &&
+        snippet.includes(year),
+    );
+    // filter by word count
+    const hasEnoughContent = item.wordcount > 500;
+    return hasKeywords && hasEnoughContent;
+  });
+};
+
+/* const scoreEvents = function (item) {
+  let score = 0;
+  const title = item.title.toLowerCase();
+  const snippet = item.snippet.toLowerCase();
+  // add a score for each item passed
+  DECISION_KEYWORDS.forEach((keyword) => {
+    if (title.includes(keyword)) score += 3;
+    if (snippet.includes(keyword)) score += 1;
+  });
+
+  if (item.wordcount > 1000) score += 1;
+
+  return score;
+}; */
+
 const getJSON = async function (url) {
   try {
     const response = await fetch(url);
@@ -54,73 +78,38 @@ const getJSON = async function (url) {
   }
 };
 
-const getRawEvents = async function (query) {
-  //const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=10&format=json&origin=*`;
-  try {
-    const events = await getJSON(searchURL(query));
-    return events;
-  } catch (error) {
-    console.log(error);
-  }
-};
+const searchHistoricalEvents = async function (year) {
+  const query = `${year} treaty OR law OR agreement OR pact OR climate`;
 
-const getFilteredEvents = async function (year, keywords) {
-  const query = `${year} ${keywords}`;
   try {
-    const rawEvents = await getRawEvents(query);
+    // first fetch using year + keywords
+    const rawEvents = await getJSON(searchURL(query));
+    console.log(rawEvents);
 
-    const events = await rawEvents.query.search.map(async (ev) => {
-      const page = await getJSON(searchDetailsURL(ev.pageid));
-      return Object.values(page.query.pages)[0];
+    // filter most relevant events
+    const filteredEvents = filterEvents(rawEvents.query.search, year);
+
+    // Second fetch with only relevant events id
+    const filteredEventSearch = await filteredEvents.map(async (ev) => {
+      const data = await getJSON(searchDetailsURL(ev.pageid));
+      const eventObj = Object.values(data.query.pages)[0];
+      return {
+        id: eventObj.pageid,
+        url: eventObj.fullurl,
+        description: eventObj.extract,
+        title: eventObj.title,
+        language: eventObj.pagelanguage,
+        thumbnail: eventObj.thumbnail,
+      };
     });
 
-    const filteredEvents = await Promise.all(events);
-    console.log(filteredEvents);
+    // wait for all the fetches and store the result on the historicalEvents object
+    historicalEvents.result = await Promise.all(filteredEventSearch);
+
+    console.log(historicalEvents);
   } catch (error) {
     console.log(error);
   }
 };
 
-getFilteredEvents(1989, "treaty");
-
-// const loadEvents = async function () {
-//   const events = await getFilteredEvents(getRawEvents(1989, "treaty"));
-//   console.log(events);
-// };
-
-// loadEvents();
-
-/* const getJSON = async function (url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (!response.ok) throw new Error(`${response.status}`);
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-let eventsData;
-
-const loadEventsSearch = async function (year, keywords) {
-  const query = `${year} ${keywords}`;
-  try {
-    const data = await getJSON(searchURL(query));
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const loadFilteredEvents = async function () {
-  const events = await loadEventsSearch(1989, "treaty");
-  events.query.search.map((ev) => {
-
-  });
-};
-
-loadFilteredEvents(); */
+searchHistoricalEvents(2020);

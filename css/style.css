@@ -222,6 +222,7 @@ textarea::placeholder {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* number of lines */
+  line-clamp: 3; /* number of lines */
   overflow: hidden;
 }
 
