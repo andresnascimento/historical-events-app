@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Historical Events</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="./src/css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
@@ -66,8 +66,16 @@
             A lot happened the year you arrived. Let’s rewind and explore.
           </p>
           <label for="birth-year">Birth Year</label>
-          <input type="date" id="birth-year" name="birth-year" />
-          <button type="submit" class="btn btn-primary btn-lg">
+          <input
+            type="date"
+            id="birth-year"
+            name="birth-year"
+            class="section__search-input"
+          />
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg section__search-btn"
+          >
             Show me my year
           </button>
         </form>
@@ -111,7 +119,7 @@
                     >
                       <figure class="event__preview-image">
                         <img
-                          src="./assets/img/evento-1.png"
+                          src="./src/img/evento-1.png"
                           alt="image description"
                         />
                       </figure>
@@ -143,7 +151,7 @@
                     >
                       <figure class="event__preview-image">
                         <img
-                          src="./assets/img/evento-2.png"
+                          src="./src/img/evento-2.png"
                           alt="image description"
                         />
                       </figure>
@@ -221,6 +229,6 @@
         </section>
       </main>
     </div>
-    <script src="js/script.js"></script>
+    <script type="module" src="./src/js/controller.js"></script>
   </body>
 </html>
