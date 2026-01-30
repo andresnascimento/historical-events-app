@@ -75,6 +75,10 @@ textarea::placeholder {
 
 /* GLOBAL */
 
+.hidden {
+  display: none;
+}
+
 .btn {
   border-radius: var(--radius-sm);
   font-size: var(--font-family-base) !important;
@@ -134,8 +138,10 @@ textarea::placeholder {
 
 .section__search {
   padding: 2.5rem;
-  flex-grow: 1;
+  flex-grow: 2;
   max-width: 18.75rem;
+  height: 100vh;
+  height: 100dvh;
   border-right: var(--stroke-light);
 }
 
@@ -170,6 +176,8 @@ textarea::placeholder {
 .section__search-result {
   flex-grow: 3;
   margin-right: 2.5rem;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .section__search-result-header {
@@ -210,6 +218,12 @@ textarea::placeholder {
 .event__preview-image {
   margin: 0;
 }
+.event__preview-image img {
+  width: 20rem;
+  height: 10rem;
+  object-fit: cover;
+  display: block;
+}
 
 .event__preview-description {
   text-align: left;
@@ -221,8 +235,8 @@ textarea::placeholder {
   color: var(--color-text-default);
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* number of lines */
-  line-clamp: 3; /* number of lines */
+  -webkit-line-clamp: 4; /* number of lines */
+  line-clamp: 4; /* number of lines */
   overflow: hidden;
 }
 
@@ -231,6 +245,11 @@ textarea::placeholder {
   font-weight: 900;
   font-size: var(--font-size-body-lg);
   position: relative;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* number of lines */
+  line-clamp: 2; /* number of lines */
+  overflow: hidden;
 }
 
 .event__preview-description-title::before {
@@ -239,6 +258,6 @@ textarea::placeholder {
   width: 64px;
   height: 3px;
   background-color: var(--color-primary);
-  right: 110%;
+  right: 105%;
   top: 50%;
 }

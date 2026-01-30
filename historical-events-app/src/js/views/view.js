@@ -1,15 +1,19 @@
 export default class View {
+  //   _eventArticlePreview = document.querySelectorAll(".event__preview-container");
+  //   _sectionSearch = document.querySelector(".section__search");
   _data;
+
   render(data) {
     if (data.length === 0) return console.log("erro");
 
-    this._data = data;
-    console.log(this._data);
-    this._clear();
-    this._parentElement.innerHTML = "";
+    data.result.forEach((element) => {
+      this._data = element;
+      const markup = this._generateMarkup();
+      this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    });
   }
 
-  _clear() {
+  clear() {
     this._parentElement.innerHTML = "";
   }
 }
