@@ -19,7 +19,12 @@ const controlEventPreview = async function (query) {
   }
 };
 
+const controlToggleEvent = function () {
+  eventPageView.hideEventDetails();
+};
+
 const init = function () {
   eventListView.addSearchHandler(controlEventPreview);
+  eventPageView.addReturnButton(controlToggleEvent);
 };
 init();
