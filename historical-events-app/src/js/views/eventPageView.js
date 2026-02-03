@@ -14,20 +14,22 @@ class EventPageView extends View {
 
     const markup = this._generateArticleMarkup(selectedArticle[0]);
     this._eventArticleDetails.insertAdjacentHTML("afterbegin", markup);
+    // add css classes to manipulate layout visibily
     this.showEventDetails();
   };
 
   showEventDetails() {
-    this._sectionSearch.classList.add("hidden");
-    this._eventArticleDetails.classList.remove("hidden");
-    this._eventList.classList.add("shrink-content");
-    this._returnButton.classList.remove("hidden");
+    this.removeClass([this._eventArticleDetails, this._returnButton], "hidden");
+    this.addClass([this._sectionSearch], "hidden");
+    this.addClass([this._eventList], "shrink-content");
   }
+
   hideEventDetails() {
+    this.addClass([this._eventArticleDetails, this._returnButton], "hidden");
     this._sectionSearch.classList.remove("hidden");
-    this._eventArticleDetails.classList.add("hidden");
     this._eventList.classList.remove("shrink-content");
-    this._returnButton.classList.add("hidden");
+    // this._eventArticleDetails.classList.add("hidden");
+    // this._returnButton.classList.add("hidden");
   }
 
   addReturnButton(handler) {
@@ -40,15 +42,16 @@ class EventPageView extends View {
   _generateArticleMarkup(data) {
     return `
         <article
-            id="event-1992-01-20"
+            id="${data.id}"
             tabindex="-1"
-            aria-labelledby="event-title"
+            aria-labelledby="${data.title}"
         >
             <figure>
               <img src="${data.thumbnail.source}" />
             </figure>
             <div>
                 <h1 id="event-title">${data.title}</h1>
+                <p>Last updated at: ${data.updated}</p>
                 <p>
                     ${data.description}
                 </p>

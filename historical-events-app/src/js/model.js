@@ -39,11 +39,13 @@ export const searchHistoricalEvents = async function (year) {
       const eventObj = Object.values(data.query.pages)[0];
       return {
         id: eventObj.pageid,
-        url: eventObj.fullurl,
+        url: eventObj.canonicalurl,
         description: eventObj.extract,
         title: eventObj.title,
         language: eventObj.pagelanguage,
         thumbnail: eventObj.thumbnail,
+        categories: eventObj.categories,
+        updated: eventObj.touched,
       };
     });
 

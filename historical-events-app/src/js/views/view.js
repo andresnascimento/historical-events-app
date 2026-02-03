@@ -1,6 +1,4 @@
 export default class View {
-  //   _eventArticlePreview = document.querySelectorAll(".event__preview-container");
-  //   _sectionSearch = document.querySelector(".section__search");
   _data;
 
   render(data) {
@@ -15,5 +13,12 @@ export default class View {
 
   clear() {
     this._parentElement.innerHTML = "";
+  }
+
+  removeClass(elArr, className) {
+    elArr.forEach((el) => el.classList.remove(className));
+  }
+  addClass(elArr, className) {
+    elArr.forEach((el) => el.classList.add(className));
   }
 }

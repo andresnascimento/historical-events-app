@@ -4,11 +4,14 @@ import eventPageView from "./eventPageView";
 class EventListView extends View {
   _parentElement = document.querySelector(".section__search-result--container");
   _searchButton = document.querySelector(".section__search-btn");
+  _eventListHeader = document.querySelector(".section__search-result-header");
+  _eventListTitle = document.querySelector(".section__search-result-title");
   _dataInputValue = new Date(
     document.querySelector(".section__search-input").value
   ).getFullYear();
 
   _generateMarkup() {
+    const description = this._createDescriptio(this._data.description);
     return `
     <li >
         <article id='${this._data.id}'>
@@ -32,7 +35,7 @@ class EventListView extends View {
                         ${this._data.title}
                     </time>
                     <p>
-                        ${this._data.description}
+                        ${description}
                     </p>
                 </div>
             </button>
@@ -40,6 +43,21 @@ class EventListView extends View {
     </li>
     
     `;
+  }
+
+  _createDescriptio(htmlString) {
+    const container = document.createElement("div");
+    container.innerHTML = htmlString;
+
+    // select all <p>
+    const paragraphs = [...container.querySelectorAll("p")];
+
+    const firstValidParagraph = paragraphs.find(
+      (p) => p.textContent.trim() !== ""
+    );
+
+    console.log(firstValidParagraph);
+    return firstValidParagraph ? firstValidParagraph.innerHTML : "";
   }
 
   addClickHandler(handler, data) {
@@ -52,8 +70,10 @@ class EventListView extends View {
   }
 
   addSearchHandler(handler) {
+    this._eventListTitle.innerHTML = this._dataInputValue;
     this._searchButton.addEventListener("click", (e) => {
       e.preventDefault();
+      this._eventListHeader.classList.remove("hidden");
       handler(this._dataInputValue);
       console.log(this._dataInputValue);
     });

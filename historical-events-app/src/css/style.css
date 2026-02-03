@@ -246,8 +246,8 @@ textarea::placeholder {
   color: var(--color-text-default);
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4; /* number of lines */
-  line-clamp: 4; /* number of lines */
+  -webkit-line-clamp: 3; /* number of lines */
+  line-clamp: 3; /* number of lines */
   overflow: hidden;
 }
 
