@@ -1,4 +1,6 @@
+import eventListView from "./eventListView";
 import View from "./view";
+import placeholderImg from "../../img/image-placeholder.png";
 
 class EventPageView extends View {
   _sectionSearch = document.querySelector(".section__search");
@@ -6,13 +8,10 @@ class EventPageView extends View {
   _eventList = document.querySelector(".events-list");
   _returnButton = document.querySelector(".btn-return");
 
-  renderArticle = (data, id) => {
+  renderArticle = (selectedArticle) => {
     this._eventArticleDetails.innerHTML = "";
-    const selectedArticle = data.filter((article) => {
-      if (article.id === id) return article;
-    });
 
-    const markup = this._generateArticleMarkup(selectedArticle[0]);
+    const markup = this._generateArticleMarkup(selectedArticle);
     this._eventArticleDetails.insertAdjacentHTML("afterbegin", markup);
     // add css classes to manipulate layout visibily
     this.showEventDetails();
@@ -28,14 +27,13 @@ class EventPageView extends View {
     this.addClass([this._eventArticleDetails, this._returnButton], "hidden");
     this._sectionSearch.classList.remove("hidden");
     this._eventList.classList.remove("shrink-content");
-    // this._eventArticleDetails.classList.add("hidden");
-    // this._returnButton.classList.add("hidden");
   }
 
   addReturnButton(handler) {
     this._returnButton.addEventListener("click", (e) => {
       e.preventDefault();
       handler();
+      eventListView.dataInputFocus();
     });
   }
 
@@ -47,14 +45,26 @@ class EventPageView extends View {
             aria-labelledby="${data.title}"
         >
             <figure>
-              <img src="${data.thumbnail.source}" />
+              <img src="${
+                data.thumbnail ? data.thumbnail.source : placeholderImg
+              }" />
             </figure>
             <div>
                 <h1 id="event-title">${data.title}</h1>
-                <p>Last updated at: ${data.updated}</p>
+                <p>Updated · ${this.formatDate(data.updated)}</p>
                 <p>
                     ${data.description}
                 </p>
+                <a 
+                href="${data.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="event-details-link"
+                >
+                    Dive deeper into this moment on Wikipedia 
+                    <span class="material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                    <span class="sr-only">(opens in a new tab)</span>
+                </a>
             </div>
         </article>
     `;

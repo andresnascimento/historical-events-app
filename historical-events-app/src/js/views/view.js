@@ -15,6 +15,15 @@ export default class View {
     this._parentElement.innerHTML = "";
   }
 
+  formatDate(isoDate) {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }
+
   removeClass(elArr, className) {
     elArr.forEach((el) => el.classList.remove(className));
   }

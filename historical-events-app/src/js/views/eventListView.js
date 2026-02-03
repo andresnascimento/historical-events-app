@@ -1,17 +1,19 @@
 import View from "./view";
 import eventPageView from "./eventPageView";
+import placeholderThumbnail from "../../img/thumbnail-placeholder.png";
 
 class EventListView extends View {
   _parentElement = document.querySelector(".section__search-result--container");
   _searchButton = document.querySelector(".section__search-btn");
   _eventListHeader = document.querySelector(".section__search-result-header");
   _eventListTitle = document.querySelector(".section__search-result-title");
-  _dataInputValue = new Date(
-    document.querySelector(".section__search-input").value
-  ).getFullYear();
+  _dateInputValue = document.querySelector("#birth-year");
+  //    new Date(
+  //     document.querySelector(".section__search-input").value
+  //   ).getFullYear();
 
   _generateMarkup() {
-    const description = this._createDescriptio(this._data.description);
+    const description = this._createDescription(this._data.description);
     return `
     <li >
         <article id='${this._data.id}'>
@@ -23,17 +25,21 @@ class EventListView extends View {
             >
                 <figure class="event__preview-image">
                     <img
-                        src="${this._data.thumbnail.source}"
+                        src="${
+                          this._data.thumbnail
+                            ? this._data.thumbnail.source
+                            : placeholderThumbnail
+                        }"
                         alt="image description"
                     />
                 </figure>
                 <div class="event__preview-description">
-                    <time
+                    <h3
                         datetime="1992-01-20"
                         class="event__preview-description-title"
                     >
                         ${this._data.title}
-                    </time>
+                    </h3>
                     <p>
                         ${description}
                     </p>
@@ -45,7 +51,18 @@ class EventListView extends View {
     `;
   }
 
-  _createDescriptio(htmlString) {
+  getInputedDate() {
+    const year = this._dateInputValue.value.split("-")[0];
+    console.log(year);
+    return year;
+  }
+
+  dataInputFocus() {
+    this._dateInputValue.focus();
+  }
+
+  _createDescription(htmlString) {
+    // it cleans the fetched article description to show in the event list preview
     const container = document.createElement("div");
     container.innerHTML = htmlString;
 
@@ -56,26 +73,31 @@ class EventListView extends View {
       (p) => p.textContent.trim() !== ""
     );
 
-    console.log(firstValidParagraph);
     return firstValidParagraph ? firstValidParagraph.innerHTML : "";
   }
 
-  addClickHandler(handler, data) {
+  addClickHandler(data) {
     [...this._parentElement.children].forEach((element) => {
       element.addEventListener("click", (e) => {
+        // get the clicked element id
         const id = +e.target.closest("article").id;
-        handler(data, id);
+        // filter the results array by id
+        const selectedArticle = data.filter((article) => {
+          if (article.id === id) return article;
+        });
+        // render the pageview with the filtered data
+        eventPageView.renderArticle(selectedArticle[0]);
       });
     });
   }
 
   addSearchHandler(handler) {
-    this._eventListTitle.innerHTML = this._dataInputValue;
     this._searchButton.addEventListener("click", (e) => {
       e.preventDefault();
+      handler();
+      this._eventListTitle.innerHTML = this.getInputedDate();
       this._eventListHeader.classList.remove("hidden");
-      handler(this._dataInputValue);
-      console.log(this._dataInputValue);
+      this._dateInputValue.valueAsDate = null;
     });
   }
 }
