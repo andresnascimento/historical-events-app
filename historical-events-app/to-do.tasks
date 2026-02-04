@@ -2,13 +2,15 @@
 ✔ article markdown @done (2/3/2026, 2:11:26 PM)
 ✔ add fall back for empty images @done (2/3/2026, 4:39:53 PM)
 ✔ adjust the last edited at info @done (2/3/2026, 5:09:33 PM)
-☐ add loading
-☐ progressive load articles
-☐ add search button validation?
+✔ add loading @done (2/4/2026, 5:11:40 PM)
+✔ progressive load articles @done (2/4/2026, 5:11:47 PM)
+✔ add search button validation? @done (2/4/2026, 5:11:52 PM)
 ☐ improve css with simple animations
 ☐ improve the filter algorithm 
 ☐ add category filter
 ☐ improve mobile view
 ☐ add translation 
 ☐ use a different API to fetch historical event list, then use the wikipedia to get event details
+☐ improve UI
+
 
