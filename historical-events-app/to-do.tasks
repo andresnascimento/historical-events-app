@@ -4,9 +4,11 @@
 ✔ adjust the last edited at info @done (2/3/2026, 5:09:33 PM)
 ☐ add loading
 ☐ progressive load articles
+☐ add search button validation?
 ☐ improve css with simple animations
 ☐ improve the filter algorithm 
 ☐ add category filter
 ☐ improve mobile view
 ☐ add translation 
+☐ use a different API to fetch historical event list, then use the wikipedia to get event details
 

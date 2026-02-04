@@ -2,8 +2,9 @@ export default class View {
   _data;
 
   render(data) {
-    if (data.length === 0) return console.log("erro");
+    if (data.length === 0) return;
 
+    this.clear();
     data.result.forEach((element) => {
       this._data = element;
       const markup = this._generateMarkup();
@@ -13,6 +14,12 @@ export default class View {
 
   clear() {
     this._parentElement.innerHTML = "";
+  }
+
+  renderLoading() {
+    const markup = `<h1>Carregando</h1>`;
+    this.clear();
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
   formatDate(isoDate) {

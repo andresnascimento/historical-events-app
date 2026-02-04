@@ -6,12 +6,10 @@ const controlEventPreview = async function () {
   try {
     //get the inputed year
     const year = eventListView.getInputedDate();
+    eventListView.renderLoading();
     // fetch data
     await model.searchHistoricalEvents(year);
     console.log(model.historicalEvents.result);
-
-    // remove loading
-    eventListView.clear();
 
     // render event list
     eventListView.render(model.historicalEvents);
