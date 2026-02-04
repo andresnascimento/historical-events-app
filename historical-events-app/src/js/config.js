@@ -7,17 +7,17 @@ export const searchURL = (query) =>
 
 export const searchDetailsURL = (pageId) => {
   return (
-    `https://en.wikipedia.org/w/api.php` +
-    `?action=query` +
-    `&prop=extracts|info|pageimages` +
+    "https://en.wikipedia.org/w/api.php" +
+    "?action=query" +
+    "&prop=extracts|info|pageimages|categories" +
     `&pageids=${pageId}` +
-    `&exintro=true` +
-    `&explaintext=true` +
-    `&inprop=url` +
-    `&piprop=thumbnail` +
-    `&pithumbsize=600` +
-    `&format=json` +
-    `&origin=*`
+    "&exintro=true" +
+    "&inprop=url" +
+    "&piprop=thumbnail" +
+    "&pithumbsize=600" +
+    "&cllimit=10" +
+    "&format=json" +
+    "&origin=*"
   );
 };
 
