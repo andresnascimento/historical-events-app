@@ -66,15 +66,25 @@
             A lot happened the year you arrived. Let’s rewind and explore.
           </p>
           <label for="birth-year">Birth Year</label>
+
           <input
-            type="date"
-            placeholder="dd/mm/yyyy"
-            id="birth-year"
-            name="birth-year"
+            id="year"
+            name="year"
+            type="text"
+            inputmode="numeric"
+            pattern="\d{4}"
+            maxlength="4"
+            required
+            aria-describedby="year-help"
             class="section__search-input"
           />
+          <p id="year-help" class="hidden">
+            Enter a year between 1800 and 2026
+          </p>
+
           <button
             type="submit"
+            disabled
             class="btn btn-primary btn-lg section__search-btn"
           >
             Show me my year
@@ -120,6 +130,10 @@
               </nav> -->
             </header>
             <section aria-labelledby="events-title">
+              <!-- <div class="search__loading">
+                <div id="lottie" style="width: 300px; height: 250px"></div>
+                <h2>Dusting off old records…</h2>
+              </div> -->
               <ul class="section__search-result--container">
                 <!-- <li>
                   <article>

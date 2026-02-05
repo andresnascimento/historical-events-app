@@ -7,10 +7,7 @@ class EventListView extends View {
   _searchButton = document.querySelector(".section__search-btn");
   _eventListHeader = document.querySelector(".section__search-result-header");
   _eventListTitle = document.querySelector(".section__search-result-title");
-  _dateInputValue = document.querySelector("#birth-year");
-  //    new Date(
-  //     document.querySelector(".section__search-input").value
-  //   ).getFullYear();
+  _dateInputValue = document.querySelector("#year");
 
   _generateMarkup() {
     const description = this._createDescription(this._data.description);
@@ -52,13 +49,22 @@ class EventListView extends View {
   }
 
   getInputedDate() {
-    const year = this._dateInputValue.value.split("-")[0];
-    console.log(year);
-    return year;
+    return this._dateInputValue.value;
+    //const year = this._dateInputValue.value.split("-")[0];
   }
 
   dataInputFocus() {
     this._dateInputValue.focus();
+  }
+
+  checkInputValue() {
+    this._dateInputValue.addEventListener("input", () => {
+      const year = Number(this._dateInputValue.value);
+
+      const isValid = Number.isInteger(year) && year >= 1800 && year <= 2026;
+
+      this._searchButton.disabled = !isValid;
+    });
   }
 
   _createDescription(htmlString) {
@@ -96,8 +102,8 @@ class EventListView extends View {
       e.preventDefault();
       handler();
       this._eventListTitle.innerHTML = this.getInputedDate();
-      this._eventListHeader.classList.remove("hidden");
-      this._dateInputValue.valueAsDate = null;
+      this._dateInputValue.value = "";
+      //this._dateInputValue.valueAsDate = null;
     });
   }
 }

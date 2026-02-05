@@ -6,13 +6,16 @@ const controlEventPreview = async function () {
   try {
     //get the inputed year
     const year = eventListView.getInputedDate();
-    eventListView.renderLoading();
-    // fetch data
-    await model.searchHistoricalEvents(year);
-    console.log(model.historicalEvents.result);
 
-    // render event list
-    eventListView.render(model.historicalEvents);
+    eventListView.renderLoading(year);
+
+    // fetch data
+    await model.searchHistoricalEvents(year, function () {
+      // render event list
+      eventListView.render(model.historicalEvents);
+    });
+
+    console.log(model.historicalEvents.result);
 
     // add listeners to the event list
     eventListView.addClickHandler(model.historicalEvents.result);
@@ -29,5 +32,6 @@ const init = function () {
   eventListView.addSearchHandler(controlEventPreview);
   eventListView.dataInputFocus();
   eventPageView.addReturnButton(controlToggleEvent);
+  eventListView.checkInputValue();
 };
 init();
